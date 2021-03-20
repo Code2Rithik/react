@@ -6,15 +6,15 @@
  */
 'use strict';
 
-const babelParser = require('@babel/parser');
-const fs = require('fs');
-const through = require('through2');
-const traverse = require('@babel/traverse').default;
-const gs = require('glob-stream');
+let babelParser = require('@babel/parser');
+let fs = require('fs');
+let through = require('through2');
+let traverse = require('@babel/traverse').default;
+let gs = require('glob-stream');
 
-const evalToString = require('../shared/evalToString');
+let evalToString = require('../shared/evalToString');
 
-const parserOptions = {
+let parserOptions = {
   sourceType: 'module',
   // babelParser has its own options and we can't directly
   // import/require a babel preset. It should be kept **the same** as
@@ -29,7 +29,7 @@ const parserOptions = {
   ],
 };
 
-const warnings = new Set();
+let warnings = new Set();
 
 function transform(file, enc, cb) {
   fs.readFile(file.path, 'utf8', function(err, source) {
@@ -54,7 +54,7 @@ function transform(file, enc, cb) {
             callee.matchesPattern('console.warn') ||
             callee.matchesPattern('console.error')
           ) {
-            const node = astPath.node;
+            let node = astPath.node;
             if (node.callee.type !== 'MemberExpression') {
               return;
             }
